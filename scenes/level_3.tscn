@@ -1,0 +1,118 @@
+[gd_scene load_steps=13 format=3 uid="uid://7xp3wdi2syb8"]
+
+[ext_resource type="Script" uid="uid://cmqlia06q5nex" path="res://script/level_3.gd" id="1_p6vls"]
+[ext_resource type="Texture2D" uid="uid://boqk7qkng5c6e" path="res://assets/level3.png" id="2_hhfj6"]
+[ext_resource type="PackedScene" uid="uid://lav52wo3rkk8" path="res://scenes/yello.tscn" id="3_wae8j"]
+[ext_resource type="PackedScene" uid="uid://bv7ubf4d851kq" path="res://scenes/green.tscn" id="4_ha73p"]
+[ext_resource type="PackedScene" uid="uid://c5u02qomwiy21" path="res://scenes/red.tscn" id="5_vcx5n"]
+[ext_resource type="Script" uid="uid://b6f1tr2y4s3x4" path="res://script/win_area.gd" id="6_56dhn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ayd5w"]
+size = Vector2(23, 23)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1fhj5"]
+size = Vector2(21, 23)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_16pka"]
+size = Vector2(38, 47)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j8bo8"]
+size = Vector2(205, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ds5r"]
+size = Vector2(250, 154)
+
+[sub_resource type="LabelSettings" id="LabelSettings_liaj6"]
+font_size = 50
+font_color = Color(0.11077, 0.666954, 0.64397, 1)
+
+[node name="level3" type="Node2D"]
+script = ExtResource("1_p6vls")
+
+[node name="map" type="TextureRect" parent="."]
+texture_filter = 1
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_hhfj6")
+
+[node name="yello" parent="map" instance=ExtResource("3_wae8j")]
+position = Vector2(246, 130)
+speed = 250.0
+
+[node name="green" parent="map" instance=ExtResource("4_ha73p")]
+position = Vector2(182, 130)
+speed = 250.0
+
+[node name="red" parent="map" instance=ExtResource("5_vcx5n")]
+position = Vector2(105, 130)
+speed = 250.0
+
+[node name="walls" type="StaticBody2D" parent="map"]
+visible = false
+collision_layer = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="map/walls"]
+build_mode = 1
+polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 648, 0, 648, 0, 0, 76, 115, 355, 115, 355, 36, 751, 36, 751, 105, 1055, 105, 1055, 202, 1049, 202, 1049, 308, 940, 309, 940, 301, 853, 300, 853, 399, 930, 399, 930, 361, 983, 361, 983, 400, 1009, 400, 1009, 436, 983, 437, 983, 486, 1064, 487, 1063, 575, 994, 576, 994, 624, 903, 624, 903, 576, 805, 576, 805, 571, 700, 571, 700, 629, 450, 629, 450, 607, 167, 607, 168, 533, 105, 533, 105, 208, 76, 209, 76, 116)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="map/walls"]
+polygon = PackedVector2Array(292, 209, 355, 209, 355, 251, 752, 252, 751, 202, 940, 203, 939, 259, 820, 260, 820, 283, 818, 284, 818, 440, 853, 439, 855, 438, 930, 438, 930, 486, 805, 487, 805, 506, 700, 507, 700, 475, 451, 475, 449, 482, 291, 482)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="map/walls"]
+position = Vector2(162.5, 292.5)
+shape = SubResource("RectangleShape2D_ayd5w")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="map/walls"]
+position = Vector2(244.5, 295.5)
+shape = SubResource("RectangleShape2D_1fhj5")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="map/walls"]
+position = Vector2(205, 415.5)
+shape = SubResource("RectangleShape2D_16pka")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="map/walls"]
+position = Vector2(322.5, 546)
+shape = SubResource("RectangleShape2D_j8bo8")
+
+[node name="win_area" type="Area2D" parent="map" node_paths=PackedStringArray("restart_timer", "winner_label")]
+collision_layer = 2
+script = ExtResource("6_56dhn")
+restart_timer = NodePath("Timer")
+winner_label = NodePath("../Control/CenterContainer/Label")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="map/win_area"]
+position = Vector2(575, 552)
+shape = SubResource("RectangleShape2D_7ds5r")
+
+[node name="Timer" type="Timer" parent="map/win_area"]
+
+[node name="Control" type="Control" parent="map"]
+z_index = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="map/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+use_top_left = true
+
+[node name="Label" type="Label" parent="map/Control/CenterContainer"]
+layout_mode = 2
+text = "test"
+label_settings = SubResource("LabelSettings_liaj6")
+
+[connection signal="body_entered" from="map/win_area" to="map/win_area" method="_on_body_entered"]
+[connection signal="won" from="map/win_area" to="map/yello" method="winner_found"]
+[connection signal="won" from="map/win_area" to="map/green" method="winner_found"]
+[connection signal="won" from="map/win_area" to="map/red" method="winner_found"]

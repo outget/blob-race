@@ -1,0 +1,114 @@
+[gd_scene load_steps=13 format=3 uid="uid://c81k4vf3qcoj3"]
+
+[ext_resource type="Script" uid="uid://ddgj8fihjfn2u" path="res://script/level_2.gd" id="1_eqxsl"]
+[ext_resource type="Texture2D" uid="uid://b4o1xerrji7xj" path="res://assets/level2.png" id="2_eqxsl"]
+[ext_resource type="Script" uid="uid://b6f1tr2y4s3x4" path="res://script/win_area.gd" id="3_pbc48"]
+[ext_resource type="PackedScene" uid="uid://c5u02qomwiy21" path="res://scenes/red.tscn" id="3_wo48x"]
+[ext_resource type="PackedScene" uid="uid://lav52wo3rkk8" path="res://scenes/yello.tscn" id="4_y0kc7"]
+[ext_resource type="PackedScene" uid="uid://bv7ubf4d851kq" path="res://scenes/green.tscn" id="5_ne2mo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_que50"]
+size = Vector2(197, 166)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eqxsl"]
+size = Vector2(48, 49)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b4j7a"]
+size = Vector2(47, 47)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wo48x"]
+size = Vector2(37, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y0kc7"]
+size = Vector2(37, 41)
+
+[sub_resource type="LabelSettings" id="LabelSettings_hey2k"]
+font_size = 50
+font_color = Color(0.11077, 0.666954, 0.64397, 1)
+
+[node name="level2" type="Node2D"]
+script = ExtResource("1_eqxsl")
+
+[node name="map" type="TextureRect" parent="."]
+texture_filter = 1
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_eqxsl")
+
+[node name="red" parent="map" instance=ExtResource("3_wo48x")]
+position = Vector2(76, 64)
+speed = 250.0
+
+[node name="yello" parent="map" instance=ExtResource("4_y0kc7")]
+position = Vector2(83, 114)
+speed = 250.0
+
+[node name="green" parent="map" instance=ExtResource("5_ne2mo")]
+position = Vector2(132, 128)
+speed = 250.0
+
+[node name="win_area" type="Area2D" parent="map" node_paths=PackedStringArray("restart_timer", "winner_label")]
+position = Vector2(833, -179)
+collision_layer = 2
+script = ExtResource("3_pbc48")
+restart_timer = NodePath("Timer")
+winner_label = NodePath("../Control/CenterContainer/Label")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="map/win_area"]
+position = Vector2(166.5, 405)
+shape = SubResource("RectangleShape2D_que50")
+
+[node name="Timer" type="Timer" parent="map/win_area"]
+
+[node name="walls" type="StaticBody2D" parent="map"]
+visible = false
+collision_layer = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="map/walls"]
+build_mode = 1
+polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 648, 0, 648, 0, 0, 48, 40, 120, 40, 120, 64, 176, 64, 176, 128, 256, 128, 256, 88, 320, 88, 320, 48, 424, 48, 424, 64, 888, 64, 888, 104, 888, 112, 864, 112, 864, 448, 480, 440, 480, 416, 248, 416, 248, 496, 312, 496, 312, 456, 424, 456, 424, 496, 688, 496, 688, 480, 816, 480, 816, 496, 936, 496, 936, 312, 904, 312, 896, 136, 1104, 136, 1104, 312, 1056, 312, 1056, 496, 1080, 496, 1080, 592, 936, 592, 936, 624, 872, 624, 872, 592, 600, 592, 600, 632, 528, 624, 528, 592, 240, 592, 240, 608, 128, 600, 128, 416, 48, 416, 48, 320, 480, 320, 480, 112, 424, 112, 424, 128, 360, 128, 360, 176, 304, 176, 304, 240, 128, 240, 128, 176, 72, 176, 72, 104, 48, 104, 48, 40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="map/walls"]
+position = Vector2(584, 183.5)
+shape = SubResource("RectangleShape2D_eqxsl")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="map/walls"]
+position = Vector2(742.5, 186.5)
+shape = SubResource("RectangleShape2D_b4j7a")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="map/walls"]
+position = Vector2(594.5, 310)
+shape = SubResource("RectangleShape2D_wo48x")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="map/walls"]
+position = Vector2(756.5, 352.5)
+shape = SubResource("RectangleShape2D_y0kc7")
+
+[node name="Control" type="Control" parent="map"]
+z_index = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="map/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+use_top_left = true
+
+[node name="Label" type="Label" parent="map/Control/CenterContainer"]
+layout_mode = 2
+text = "test"
+label_settings = SubResource("LabelSettings_hey2k")
+
+[connection signal="body_entered" from="map/win_area" to="map/win_area" method="_on_body_entered"]
+[connection signal="timeout" from="map/win_area/Timer" to="." method="next_scene"]

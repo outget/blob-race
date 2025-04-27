@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://lav52wo3rkk8"]
+
+[ext_resource type="Script" uid="uid://6tvxx3gyqffs" path="res://script/move.gd" id="1_qo47k"]
+[ext_resource type="Texture2D" uid="uid://clmc0hgrt47pd" path="res://assets/yeloblob.png" id="2_vevfx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fu4ny"]
+radius = 22.0227
+
+[node name="yello" type="CharacterBody2D"]
+z_index = 1
+collision_mask = 3
+script = ExtResource("1_qo47k")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_vevfx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(33, 33)
+shape = SubResource("CircleShape2D_fu4ny")
